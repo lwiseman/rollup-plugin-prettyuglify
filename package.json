@@ -1,7 +1,7 @@
 {
-  "name": "rollup-plugin-uglify",
-  "version": "2.0.1",
-  "description": "Rollup plugin to minify generated bundle",
+  "name": "rollup-plugin-prettyuglify",
+  "version": "1.0.0",
+  "description": "Rollup plugin to minify generated bundle into the shape of an SVG's paths",
   "main": "index.js",
   "files": [
     "index.js"
@@ -12,7 +12,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/TrySound/rollup-plugin-uglify.git"
+    "url": "git+https://github.com/lwiseman/rollup-plugin-prettyuglify.git"
   },
   "keywords": [
     "rollup",
@@ -20,9 +20,11 @@
     "uglify",
     "minify"
   ],
-  "author": "Bogdan Chadkin <trysound@yandex.ru>",
+  "author": "Levi Wiseman <levi@codeaholic.com>",
   "license": "MIT",
   "dependencies": {
+    "cheerio": "^1.0.0-rc.2",
+    "point-in-svg-polygon": "^1.0.19",
     "uglify-js": "^3.0.9"
   },
   "devDependencies": {

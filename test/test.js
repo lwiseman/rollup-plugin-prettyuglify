@@ -1,18 +1,18 @@
 const assert = require('assert');
 const rollup = require('rollup').rollup;
 const readFile = require('fs').readFileSync;
-const uglify = require('../');
+const prettyuglify = require('../');
 
 test('minify', () => {
     return rollup({
         entry: 'test/fixtures/unminified.js',
         plugins: [
-            uglify()
+            prettyuglify('codeaholic.svg')
         ]
     }).then(bundle => {
         const result = bundle.generate({ format: 'cjs' });
         expect(Object.keys(result)).toHaveLength(2);
-        expect(result.code).toEqual('"use strict";var a=5;a<3&&console.log(4);\n');
+        expect(result.code).toEqual('\n                                                                          "use strict" ;var a=5 ;a<3&&console.log(4);\n');
         expect(result.map).toBeFalsy();
     });
 });
@@ -21,12 +21,12 @@ test('minify via uglify options', () => {
     return rollup({
         entry: 'test/fixtures/empty.js',
         plugins: [
-            uglify({ output: { comments: 'all' } })
+            prettyuglify('codeaholic.svg', { output: { comments: 'all' } })
         ]
     }).then(bundle => {
         const result = bundle.generate({ banner: '/* package name */', format: 'cjs' });
         expect(Object.keys(result)).toHaveLength(2);
-        expect(result.code).toEqual('/* package name */\n"use strict";\n');
+        expect(result.code).toEqual('\n                                                                          /* package name */ "use strict";\n');
         expect(result.map).toBeFalsy();
     });
 });
@@ -35,7 +35,7 @@ test('minify with sourcemaps', () => {
     return rollup({
         entry: 'test/fixtures/sourcemap.js',
         plugins: [
-            uglify()
+            prettyuglify('codeaholic.svg')
         ]
     }).then(bundle => {
         const result = bundle.generate({ format: 'cjs', sourceMap: true });
@@ -53,10 +53,11 @@ test('allow passing minifier', () => {
     return rollup({
         entry: 'test/fixtures/plain-file.js',
         plugins: [
-            uglify(testOptions, (code, options) => {
+            prettyuglify('codeaholic.svg', testOptions, (code, options) => {
                 expect(code.trim()).toEqual(expectedCode.trim());
                 expect(options).toEqual({
                     foo: 'bar',
+                    output: { max_line_len: 1 },
                     sourceMap: true
                 });
                 return { code };
@@ -64,7 +65,7 @@ test('allow passing minifier', () => {
         ]
     }).then(bundle => {
         const result = bundle.generate({ format: 'es' });
-        expect(result.code.trim()).toEqual(expectedCode.trim());
+        expect(result.code).toEqual('\n                                                                          const foo = \'bar\'; console.log(foo);\n');
     });
 });
 
@@ -72,7 +73,7 @@ test('throw error on uglify fail', () => {
     return rollup({
         entry: 'test/fixtures/failed.js',
         plugins: [
-            uglify({}, () => ({
+            prettyuglify('codeaholic.svg', {}, () => ({
                 error: Error('some error')
             }))
         ]

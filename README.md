@@ -1,26 +1,26 @@
-# rollup-plugin-uglify [![Travis Build Status][travis-img]][travis]
+# rollup-plugin-prettyuglify [![Travis Build Status][travis-img]][travis]
 
-[travis-img]: https://travis-ci.org/TrySound/rollup-plugin-uglify.svg
-[travis]: https://travis-ci.org/TrySound/rollup-plugin-uglify
+[travis-img]: https://api.travis-ci.org/lwiseman/rollup-plugin-prettyuglify.svg
+[travis]: https://travis-ci.org/lwiseman/rollup-plugin-prettyuglify
 
-[Rollup](https://github.com/rollup/rollup) plugin to minify generated bundle.
+[Rollup](https://github.com/rollup/rollup) plugin to minify generated bundle into the shape of an SVG's paths.
 
 ## Install
 
 ```sh
-npm i rollup-plugin-uglify -D
+npm i rollup-plugin-prettyuglify -D
 ```
 
 ## Usage
 
 ```js
 import { rollup } from 'rollup';
-import uglify from 'rollup-plugin-uglify';
+import prettyuglify from 'rollup-plugin-prettyuglify';
 
 rollup({
     entry: 'main.js',
     plugins: [
-        uglify()
+        prettyuglify('image.svg')
     ]
 });
 ```
@@ -28,8 +28,10 @@ rollup({
 ## Options
 
 ```js
-uglify(options, minifier)
+prettyuglify(file, options, minifier)
 ```
+
+`file` - type: `string`. File with which to shape minified code.
 
 `options` – default: `{}`, type: `object`. [UglifyJS API options](https://github.com/mishoo/UglifyJS2#api-reference)
 
@@ -38,16 +40,16 @@ uglify(options, minifier)
 ## Warning
 
 [UglifyJS](https://github.com/mishoo/UglifyJS2), which this plugin is based on, does not support the ES2015 module syntax. Thus using this plugin with Rollup's default bundle format (`'es'`) will not work and error out.
-To work around this you can tell `rollup-plugin-uglify` to use the UglifyJS [unstable es version](https://github.com/mishoo/UglifyJS2) by passing its `minify` function to minify your code.
+To work around this you can tell `rollup-plugin-prettyuglify` to use the UglifyJS [unstable es version](https://github.com/mishoo/UglifyJS2) by passing its `minify` function to minify your code.
 ```js
 import { rollup } from 'rollup';
-import uglify from 'rollup-plugin-uglify';
+import prettyuglify from 'rollup-plugin-prettyuglify';
 import { minify } from 'uglify-es';
 
 rollup({
     entry: 'main.js',
     plugins: [
-        uglify({}, minify)
+        prettyuglify('image.svg', {}, minify)
     ]
 });
 ```
@@ -65,7 +67,7 @@ npm i uglify-es -D
 If you'd like to preserve comments (for licensing for example), then you can specify a function to do this like so:
 
 ```js
-uglify({
+prettyuglify({
   output: {
     comments: function(node, comment) {
         var text = comment.value;
@@ -83,4 +85,4 @@ See [UglifyJS documentation](https://github.com/mishoo/UglifyJS2#keeping-comment
 
 # License
 
-MIT © [Bogdan Chadkin](mailto:trysound@yandex.ru)
+MIT © [Levi Wiseman](mailto:levi@codeaholic.com)
