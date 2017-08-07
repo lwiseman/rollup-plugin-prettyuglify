@@ -1,6 +1,6 @@
 {
   "name": "rollup-plugin-prettyuglify",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Rollup plugin to minify generated bundle into the shape of an SVG's paths",
   "main": "index.js",
   "files": [

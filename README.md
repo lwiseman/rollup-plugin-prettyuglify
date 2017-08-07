@@ -83,6 +83,10 @@ prettyuglify({
 
 See [UglifyJS documentation](https://github.com/mishoo/UglifyJS2#keeping-comments-in-the-output) for further reference.
 
+### Output
+
+![Codeaholic](https://raw.githubusercontent.com/lwiseman/rollup-plugin-prettyuglify/master/codeaholic.png)
+
 # License
 
 MIT © [Levi Wiseman](mailto:levi@codeaholic.com)
